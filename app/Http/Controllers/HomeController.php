@@ -27,4 +27,10 @@ class HomeController extends Controller
     }
 
 
+    public function diasFestivos()
+    {
+        return view('diasFestivos');
+    }
+
+
 }

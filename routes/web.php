@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DiaFestivoController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -22,15 +23,15 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
+/* Rutas para Dias Festivos */
+Route::get('/diasFestivos', [HomeController::class, 'diasFestivos'])->name('diasFestivos');
+Route::get('/diaFestivo/data', [DiaFestivoController::class, 'data'])->name('diaFestivo.data');
+Route::post('/diaFestivo/create', [DiaFestivoController::class, 'createDia'])->name('diaFestivo.create');
 
-Route::get('/diasFestivos', [HomeController::class, 'diasFestivos'])->name('home');
 
+/* Rutas para Usuario */ 
 Route::get('/usuarios', [UserController::class, 'index'])->name('usuarios');
-
 Route::get('/usuarios/data', [UserController::class, 'data'])->name('usuarios.data');
-
 Route::post('/usuarios/create', [UserController::class, 'createUser'])->name('usuarios.create');
-
 Route::delete('/usuarios/{id}', [UserController::class, 'deleteUser'])->name('usuarios.delete');
-
 Route::put('/usuarios/{id}', [UserController::class, 'updateUser'])->name('usuarios.update');

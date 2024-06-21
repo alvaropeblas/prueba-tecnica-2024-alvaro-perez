@@ -13,9 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('dia_festivo', function (Blueprint $table) {
+        Schema::create('dia_festivos', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
+            $table->string('color');
             $table->integer('dia'); 
             $table->integer('mes'); 
             $table->integer('año');

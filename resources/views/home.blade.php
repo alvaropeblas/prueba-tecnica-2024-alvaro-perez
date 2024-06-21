@@ -2,7 +2,9 @@
 
 @section('title', 'Dashboard')
 
-
+<head>
+    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+</head>
 @section('content')
 <div class="container-fluid">
     <div class="row">
@@ -15,6 +17,10 @@
         </div>
     </div>
 </div>
+
+<!-- Modal para Dias Festivos -->
+@include('components.modalDiasFestivos')
+
 @stop
 
 @section('css')
@@ -51,6 +57,12 @@
             style: 'background',
         });
         calendar.render();
+
+        
+        document.getElementById('diasFestivosLink').addEventListener('click', function (event) {
+            event.preventDefault();
+            $('#diasFestivosModal').modal('show'); 
+        });
     });
 
 </script>

@@ -11,11 +11,12 @@ class DiaFestivo extends Model
     use HasFactory;
 
     protected $fillable = [
-        'Nombre',
-        'Dia',
-        'Mes',
-        'Año',
-        'Recurrente',
+        'nombre',
+        'color',
+        'dia',
+        'mes',
+        'año',
+        'recurrente',
     ];
 
     public function usuarios()

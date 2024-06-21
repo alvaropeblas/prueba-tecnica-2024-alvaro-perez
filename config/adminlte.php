@@ -318,8 +318,9 @@ return [
         ],
         [
             'text' => 'Dias Festivos',
-            'url' => 'diasFestivos',
+            'url' => '#',
             'icon' => 'fa fa-calendar',
+            'id' => 'diasFestivosLink',
         ],
         [
             'text' => 'Usuarios',
