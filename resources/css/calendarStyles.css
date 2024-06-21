@@ -1,0 +1,40 @@
+.months-container {
+    height: 100vh;
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 20px;
+}
+
+.month-container {
+    height: 250px;
+    width: 250px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.calendar-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+table {
+    width: 100%;
+    margin-bottom: 2.5%;
+    margin-top: 1.5%;
+}
+
+.event-name {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.day-content {
+    cursor: pointer;
+}
+
+#eliminarDiaFestivo{
+    margin: 20px;
+}

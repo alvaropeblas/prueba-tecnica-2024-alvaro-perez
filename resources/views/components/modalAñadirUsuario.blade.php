@@ -11,7 +11,6 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <!-- Campos del formulario -->
                     <div class="form-group">
                         <label for="name">Nombre</label>
                         <input type="text" name="name" class="form-control" required>

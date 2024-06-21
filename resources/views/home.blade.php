@@ -4,6 +4,7 @@
 
 <head>
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    @vite(['resources/css/app.css'])
 </head>
 
 @section('content')
@@ -25,46 +26,7 @@
 
 @stop
 
-@section('css')
-<style>
-    .months-container {
-        height: 100vh;
-        width: 100%;
-        flex-wrap: wrap;
-        justify-content: space-around;
-        gap: 60px;
-    }
 
-    .month-container {
-        height: 200px;
-        width: 200px;
-        display: flex;
-        justify-content: center;
-        align-items: center
-    }
-
-    .calendar-header {
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-    }
-
-    table {
-        width: 100%;
-        margin-bottom: 2.5%;
-        margin-top: 1.5%;
-    }
-
-    .event-name {
-        font-weight: bold;
-        font-size: 16px;
-    }
-
-    .day-content {
-        cursor: pointer;
-    }
-</style>
-@stop
 
 @section('js')
 <script src="https://unpkg.com/js-year-calendar@latest/dist/js-year-calendar.min.js"></script>
@@ -75,35 +37,43 @@
     let tooltip = null;
     document.addEventListener('DOMContentLoaded', function () {
         var calendar = new Calendar('#calendar', {
-            language: 'es',
             style: 'background',
             clickDay: function (e) {
+
                 var dayEvents = e.events[0];
+                if (dayEvents != null) {
 
-
-                document.getElementById('nombreEditar').value = dayEvents.title;
-                document.getElementById('colorEditar').value = dayEvents.color;
-                document.getElementById('diaEditar').value = dayEvents.startDate.getDate();
-                document.getElementById('mesEditar').value = dayEvents.startDate.getMonth() + 1;
-                document.getElementById('anyoEditar').value = dayEvents.startDate.getFullYear();
-                if (dayEvents.recurrente == 1) {
-                    document.getElementById('recurrenteEditar').checked = true;
-                    document.getElementById('anyoEditar').disabled = true;
+                    document.getElementById('nombreEditar').value = dayEvents.title;
+                    document.getElementById('colorEditar').value = dayEvents.color;
+                    document.getElementById('diaEditar').value = dayEvents.startDate.getDate();
+                    document.getElementById('mesEditar').value = dayEvents.startDate.getMonth() + 1;
+                    document.getElementById('anyoEditar').value = dayEvents.startDate.getFullYear();
+                    if (dayEvents.recurrente == 1) {
+                        document.getElementById('recurrenteEditar').checked = true;
+                        document.getElementById('anyoEditar').disabled = true;
+                    } else {
+                        document.getElementById('recurrenteEditar').checked = false;
+                        document.getElementById('anyoEditar').disabled = false;
+                    }
+                    // Configuro la acción del formulario para enviar el ID del día festivo
+                    var form = document.getElementById('editHolidayForm');
+                    form.action = '{{ route("diaFestivo.update", ":id") }}'.replace(':id', dayEvents.id);
+                    var form = document.getElementById('deleteHolidayForm');
+                    form.action = '{{ route("diaFestivo.delete", ":id") }}'.replace(':id', dayEvents.id);
+                    $('#diasFestivosModalEditar').modal('show');
                 } else {
-                    document.getElementById('recurrenteEditar').checked = false;
-                    document.getElementById('anyoEditar').disabled = false;
-                }
-                // Configurar la acción del formulario para enviar el ID del día festivo
-                var form = document.getElementById('editHolidayForm');
-                form.action = '{{ route("diaFestivo.update", ":id") }}'.replace(':id', dayEvents.id);
+                    var selectedDate = e.date;
+                    document.getElementById('dia').value = selectedDate.getDate();
+                    document.getElementById('mes').value = selectedDate.getMonth() + 1;
+                    document.getElementById('anyo').value = selectedDate.getFullYear();
 
-                $('#diasFestivosModalEditar').modal('show');
+                    $('#diasFestivosModal').modal('show');
+                }
 
 
             },
             mouseOnDay: function (e) {
                 if (e.events.length > 0) {
-                    // Obtener el contenido del popover
                     var content = '';
 
                     for (var i in e.events) {
@@ -113,21 +83,19 @@
                             + '</div>';
                     }
 
-                    // Configurar el popover en el elemento HTML
+
                     $(e.element).popover({
-                        title: '',
+                        title: 'Dia Festivo',
                         content: content,
                         trigger: 'hover',
                         placement: 'right',
-                        html: true // Permitir contenido HTML en el popover
+                        html: true
                     });
-
-                    // Mostrar el popover al pasar el ratón sobre el elemento
                     $(e.element).popover('show');
                 }
             },
             mouseOutDay: function () {
-                // Ocultar y destruir el popover al sacar el ratón del elemento
+
                 $('.popover').popover('hide');
             }
 
@@ -164,6 +132,7 @@
                                 endDate: new Date(añoActual - 1, diaFestivo.mes - 1, diaFestivo.dia),
                                 title: diaFestivo.nombre,
                                 color: diaFestivo.color,
+                                id: diaFestivo.id,
                             });
 
                             calendar.addEvent({
@@ -171,6 +140,7 @@
                                 endDate: new Date(añoActual + 1, diaFestivo.mes - 1, diaFestivo.dia),
                                 title: diaFestivo.nombre,
                                 color: diaFestivo.color,
+                                id: diaFestivo.id,
                             });
                         } else {
                             // Agregar evento para el año específico no recurrente
@@ -179,6 +149,7 @@
                                 endDate: new Date(diaFestivo.anyo, diaFestivo.mes - 1, diaFestivo.dia),
                                 title: diaFestivo.nombre,
                                 color: diaFestivo.color,
+                                id: diaFestivo.id,
                             });
                         }
                     });
@@ -190,38 +161,6 @@
             });
         }
 
-        // Función para mostrar el nombre del día festivo al pasar el ratón sobre un día
-        function mostrarNombreDiaFestivo(event, date) {
-            var dayEvents = calendar.getEvents(date);
-            if (dayEvents.length > 0) {
-                $(event.currentTarget).popover({
-                    title: dayEvents[0].data.title,
-                    content: 'Este es un día festivo',
-                    trigger: 'hover',
-                    placement: 'auto'
-                });
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', function () {
-            var calendar = new Calendar('#calendar', {
-                clickDay: function (e) {
-                    var dayEvents = e.event[0];  
-                        document.getElementById('nombreEditar').value = dayEvents.title;
-                        document.getElementById('colorEditar').value = dayEvents.color;
-                        document.getElementById('diaEditar').value = dayEvents.startDate.getDate();
-                        document.getElementById('mesEditar').value = dayEvents.startDate.getMonth() + 1;
-                        document.getElementById('anyoEditar').value = dayEvents.startDate.getFullYear();
-                        document.getElementById('recurrenteEditar').checked = dayEvents.recurrente;
-                        var form = document.getElementById('editHolidayForm');
-                        form.action = '{{ route("diaFestivo.update", ":id") }}'.replace(':id', dayEvents.id);
-                        $('#diasFestivosModalEditar').modal('show');
-                    
-                }
-            });
-
-            calendar.render();
-        });
 
         // Evento para mostrar el modal de días festivos
         document.getElementById('diasFestivosLink').addEventListener('click', function (event) {
