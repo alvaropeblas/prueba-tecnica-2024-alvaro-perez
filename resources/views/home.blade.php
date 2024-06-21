@@ -35,12 +35,15 @@
 
 <script>
     let tooltip = null;
+    
     document.addEventListener('DOMContentLoaded', function () {
         var calendar = new Calendar('#calendar', {
             style: 'background',
+            
             clickDay: function (e) {
 
                 var dayEvents = e.events[0];
+                
                 if (dayEvents != null) {
 
                     document.getElementById('nombreEditar').value = dayEvents.title;

@@ -1,3 +1,5 @@
+<!-- Modal para Editar Dator de Usuario-->
+
 <div class="modal fade" id="editUserModal" tabindex="-1" role="dialog" aria-labelledby="editUserModalLabel"
     aria-hidden="true">
     <div class="modal-dialog" role="document">

@@ -43,8 +43,4 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function diasFestivos()
-    {
-        return $this->belongsToMany(DiaFestivo::class, 'dia_festivo_usuario');
-    }
 }

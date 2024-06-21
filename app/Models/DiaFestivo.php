@@ -19,8 +19,5 @@ class DiaFestivo extends Model
         'recurrente',
     ];
 
-    public function usuarios()
-    {
-        return $this->belongsToMany(User::class, 'dia_festivo_usuario');
-    }
+    
 }

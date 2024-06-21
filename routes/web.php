@@ -32,7 +32,7 @@ Route::delete('/diaFestivo/{id}', [DiaFestivoController::class, 'deleteDia'])->n
 
 
 
-/* Rutas para Usuario */ 
+/* Rutas para Usuario */
 Route::get('/usuarios', [UserController::class, 'index'])->name('usuarios');
 Route::get('/usuarios/data', [UserController::class, 'data'])->name('usuarios.data');
 Route::post('/usuarios/create', [UserController::class, 'createUser'])->name('usuarios.create');

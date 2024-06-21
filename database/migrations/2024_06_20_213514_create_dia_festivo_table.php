@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('dia_festivo');
+        Schema::dropIfExists('dia_festivos');
     }
 };
