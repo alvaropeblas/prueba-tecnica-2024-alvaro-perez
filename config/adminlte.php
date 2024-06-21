@@ -318,12 +318,12 @@ return [
         ],
         [
             'text' => 'Dias Festivos',
-            'url' => 'admin/settings',
+            'url' => 'diasFestivos',
             'icon' => 'fa fa-calendar',
         ],
         [
             'text' => 'Usuarios',
-            'url' => 'admin/settings',
+            'url' => 'usuarios',
             'icon' => 'fas fa-fw fa-user',
         ]
     ],
