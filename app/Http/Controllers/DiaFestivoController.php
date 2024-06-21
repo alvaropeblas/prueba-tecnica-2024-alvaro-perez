@@ -21,7 +21,7 @@ class DiaFestivoController extends Controller
             'color' => 'required|string|max:7', // Validar que el color sea un valor hexadecimal válido
             'dia' => 'required|integer|min:1|max:31',
             'mes' => 'required|integer|min:1|max:12',
-            'año' => 'required|integer|min:' . date('Y') . '|max:9999', // Año mínimo es el actual
+            'anyo' => 'required|integer|min:' . date('Y') . '|max:9999', // Año mínimo es el actual
             'recurrente' => 'boolean', // El campo recurrente debe ser booleano (opcional)
         ]);
         DiaFestivo::create([
@@ -29,7 +29,7 @@ class DiaFestivoController extends Controller
             'color' => $request->color,
             'dia' => $request->dia,
             'mes' => $request->mes,
-            'año' => $request->año,
+            'anyo' => $request->anyo,
             'recurrente' => $request->has('recurrente'), // Convertir a booleano
         ]);
         return redirect()->route('home')->with('success', 'Día festivo creado correctamente.');

@@ -44,8 +44,8 @@
                             </select>
                         </div>
                         <div class="form-group col-md-4">
-                            <label for="año">Año</label>
-                            <input type="number" name="año" id="año" class="form-control" min="{{ date('Y') }}" value="{{ date('Y') }}" required>
+                            <label for="anyo">Año</label>
+                            <input type="number" name="anyo" id="anyo" class="form-control" min="{{ date('Y') }}" value="{{ date('Y') }}" required>
                         </div>
                     </div>
                     <div class="form-group">

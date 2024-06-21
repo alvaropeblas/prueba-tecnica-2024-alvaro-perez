@@ -15,7 +15,7 @@ class DiaFestivo extends Model
         'color',
         'dia',
         'mes',
-        'año',
+        'anyo',
         'recurrente',
     ];
 

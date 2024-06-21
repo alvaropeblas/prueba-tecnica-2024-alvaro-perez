@@ -3,6 +3,7 @@
 <head>
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
+
 @section('css')
 <style>
     .loading-wrap {
@@ -48,7 +49,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.18.3/bootstrap-table.min.js"></script>
 
 <script>
-     function botonesAcciones(value, row, index) {
+    function botonesAcciones(value, row, index) {
         return [
             '<a class="edit btn btn-warning btn-sm" title="Editar">',
             '<i class="fas fa-edit"></i>',
@@ -60,14 +61,14 @@
     }
 
     var operateEvents = {
-        'click .edit': function (row) {
+        'click .edit': function (e, value, row, index) {
             // Editar usuario
             $('#editUserModal').modal('show');
             $('#edit_name').val(row.name);
             $('#edit_email').val(row.email);
             $('#editUserForm').attr('action', '{{ url("/usuarios") }}/' + row.id);
         },
-        'click .remove': function (row) {
+        'click .remove': function (e, value, row, index) {
             // Eliminar usuario
             if (confirm('¿Estás seguro de que deseas eliminar este usuario?')) {
                 $.ajax({
@@ -84,7 +85,6 @@
                     },
                     error: function (xhr, status, error) {
                         alert('Error al eliminar usuario');
-
                     }
                 });
             }
