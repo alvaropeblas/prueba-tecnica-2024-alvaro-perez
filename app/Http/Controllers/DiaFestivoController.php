@@ -18,20 +18,45 @@ class DiaFestivoController extends Controller
 
         $request->validate([
             'nombre' => 'required|string|max:255',
-            'color' => 'required|string|max:7', // Validar que el color sea un valor hexadecimal válido
+            'color' => 'required|string|max:7',
             'dia' => 'required|integer|min:1|max:31',
             'mes' => 'required|integer|min:1|max:12',
-            'anyo' => 'required|integer|min:' . date('Y') . '|max:9999', // Año mínimo es el actual
-            'recurrente' => 'boolean', // El campo recurrente debe ser booleano (opcional)
+            'recurrente' => 'boolean',
         ]);
         DiaFestivo::create([
             'nombre' => $request->nombre,
             'color' => $request->color,
             'dia' => $request->dia,
             'mes' => $request->mes,
-            'anyo' => $request->anyo,
-            'recurrente' => $request->has('recurrente'), // Convertir a booleano
+            'anyo' => $request->has('recurrente') ? null : $request->anyo,
+            'recurrente' => $request->has('recurrente'),
         ]);
         return redirect()->route('home')->with('success', 'Día festivo creado correctamente.');
+    }
+
+
+    public function deleteDia(Request $request, $id)
+    {
+        DiaFestivo::where('id', $id)->delete();
+
+        return redirect()->route('home');
+    }
+
+
+    public function updateDia(Request $request, $id)
+    {
+
+        $validatedData = $request->validate([
+            'nombre' => 'required|string|max:255',
+            'color' => 'required|string|max:7',
+            'dia' => 'required|integer|min:1|max:31',
+            'mes' => 'required|integer|min:1|max:12',
+            'recurrente' => 'boolean',
+        ]);
+
+        $diaFestivo = DiaFestivo::findOrFail($id);
+        $diaFestivo->fill($validatedData);
+        $diaFestivo->save();
+        return redirect()->route('home');
     }
 }

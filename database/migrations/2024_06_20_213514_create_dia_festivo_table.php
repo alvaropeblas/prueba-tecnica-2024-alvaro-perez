@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('color');
             $table->integer('dia'); 
             $table->integer('mes'); 
-            $table->integer('anyo');
+            $table->integer('anyo')->nullable();
             $table->boolean('recurrente')->default(false);
             $table->timestamps();
         });

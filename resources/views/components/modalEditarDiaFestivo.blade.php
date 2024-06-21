@@ -1,33 +1,36 @@
-<!-- Modal para Dias Festivos -->
-<div class="modal fade" id="diasFestivosModal" tabindex="-1" role="dialog" aria-labelledby="diasFestivosModalLabel"
-    aria-hidden="true">
+<!-- Modal Editar para Dias Festivos -->
+<div class="modal fade" id="diasFestivosModalEditar" tabindex="-1" role="dialog"
+    aria-labelledby="diasFestivosModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="diasFestivosModalLabel">Añadir Día Festivo</h5>
+                <h5 class="modal-title" id="diasFestivosModalLabel">Editar Día Festivo</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form id="addHolidayForm" action="{{ route('diaFestivo.create') }}" method="POST">
+            <form id="editHolidayForm" action="{{ route('diaFestivo.update', ':id') }}" method="POST">
                 @csrf
+                @method('PUT')
+                <input type="hidden" name="id" id="idEditar">
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="nombre">Nombre</label>
-                        <input type="text" name="nombre" id="nombre" class="form-control" required>
+                        <label for="nombreEditar">Nombre</label>
+                        <input type="text" name="nombre" id="nombreEditar" class="form-control" required>
                     </div>
                     <div class="form-group">
-                        <label for="color">Color</label>
-                        <input type="color" name="color" id="color" class="form-control" required>
+                        <label for="colorEditar">Color</label>
+                        <input type="color" name="color" id="colorEditar" class="form-control" required>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-4">
-                            <label for="dia">Día</label>
-                            <input type="number" name="dia" id="dia" class="form-control" min="1" max="31" required>
+                            <label for="diaEditar">Día</label>
+                            <input type="number" name="dia" id="diaEditar" class="form-control" min="1" max="31"
+                                required>
                         </div>
                         <div class="form-group col-md-4">
-                            <label for="mes">Mes</label>
-                            <select name="mes" id="mes" class="form-control" required>
+                            <label for="mesEditar">Mes</label>
+                            <select name="mes" id="mesEditar" class="form-control" required>
                                 <option value="">Seleccione...</option>
                                 <option value="1">Enero</option>
                                 <option value="2">Febrero</option>
@@ -44,15 +47,16 @@
                             </select>
                         </div>
                         <div class="form-group col-md-4">
-                            <label for="anyo">Año</label>
-                            <input type="number" name="anyo" id="anyo" class="form-control" min="{{ date('Y') }}"
+                            <label for="anyoEditar">Año</label>
+                            <input type="number" name="anyo" id="anyoEditar" class="form-control" min="{{ date('Y') }}"
                                 value="{{ date('Y') }}" {{ old('recurrente') ? 'disabled' : '' }}>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name="recurrente" id="recurrente" value="1">
-                            <label class="form-check-label" for="recurrente">
+                            <input class="form-check-input" type="checkbox" name="recurrenteEditar" id="recurrenteEditar"
+                                value="1">
+                            <label class="form-check-label" for="recurrenteEditar">
                                 Recurrente
                             </label>
                         </div>
@@ -60,28 +64,10 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-primary">Guardar Día Festivo</button>
+                    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                    <a href="#" id="eliminarDiaFestivo" class="btn btn-danger">Eliminar</a>
                 </div>
             </form>
         </div>
     </div>
 </div>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const recurrenteCheckbox = document.getElementById('recurrente');
-        const anyoInput = document.getElementById('anyo');
-
-
-        recurrenteCheckbox.addEventListener('change', function () {
-            anyoInput.disabled = this.checked;
-
-            if (this.checked) {
-                anyoInput.value = '';
-            } else {
-                anyoInput.value = '{{ date('Y') }}';
-            }
-        });
-        anyoInput.disabled = recurrenteCheckbox.checked;
-    });
-</script>

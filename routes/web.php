@@ -27,6 +27,9 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/diasFestivos', [HomeController::class, 'diasFestivos'])->name('diasFestivos');
 Route::get('/diaFestivo/data', [DiaFestivoController::class, 'data'])->name('diaFestivo.data');
 Route::post('/diaFestivo/create', [DiaFestivoController::class, 'createDia'])->name('diaFestivo.create');
+Route::put('/diaFestivo/{id}', [DiaFestivoController::class, 'updateDia'])->name('diaFestivo.update');
+Route::delete('/diaFestivo/{id}', [DiaFestivoController::class, 'deleteDia'])->name('diaFestivo.delete');
+
 
 
 /* Rutas para Usuario */ 

@@ -1,4 +1,5 @@
 @extends('adminlte::page')
+@section('title', 'Usuarios')
 
 <head>
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
